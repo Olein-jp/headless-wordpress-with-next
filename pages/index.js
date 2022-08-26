@@ -3,6 +3,7 @@ import { gql } from "@apollo/client";
 import { client } from "../lib/apollo";
 import styles from "../styles/Home.module.css";
 import Link from "next/link";
+import { GET_ALL_POSTS } from "../lib/queries";
 
 export default function Home({ posts, title, content }) {
   return (
@@ -35,25 +36,8 @@ export default function Home({ posts, title, content }) {
 
 export async function getStaticProps() {
   const result = await client.query({
-    query: gql`
-      query GetWordPressHOmePageAndPosts {
-        pageBy(uri: "/") {
-          title
-          content
-        }
-
-        posts {
-          nodes {
-            title
-            slug
-            date
-          }
-        }
-      }
-    `,
+    query: GET_ALL_POSTS,
   });
-
-  console.log(result);
 
   return {
     props: {

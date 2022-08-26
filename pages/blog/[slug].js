@@ -1,5 +1,6 @@
 import { gql } from "@apollo/client";
 import { client } from "../../lib/apollo";
+import { GET_SINGLE_POSTS } from "../../lib/queries";
 
 export default function BlogPage({ post }) {
   return (
@@ -12,15 +13,7 @@ export default function BlogPage({ post }) {
 
 export async function getStaticPaths() {
   const result = await client.query({
-    query: gql`
-      query GetWordPressPosts {
-        posts {
-          nodes {
-            slug
-          }
-        }
-      }
-    `,
+    query: GET_SINGLE_POSTS,
   });
 
   return {
