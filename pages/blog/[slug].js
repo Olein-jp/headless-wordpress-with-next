@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 import { client } from "../../lib/apollo";
-import { GET_SINGLE_POSTS } from "../../lib/queries";
+import { GET_ALL_POSTS, GET_SINGLE_POSTS } from "../../lib/queries";
 
 export default function BlogPage({ post }) {
   return (
