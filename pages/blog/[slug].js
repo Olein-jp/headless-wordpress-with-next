@@ -5,7 +5,7 @@ import { GET_SINGLE_POSTS } from "../../lib/queries";
 export default function BlogPage({ post }) {
   return (
     <div>
-      <h1>{post.title}</h1>
+      <h1 dangerouslySetInnerHTML={{ __html: post.title }} />
       <div dangerouslySetInnerHTML={{ __html: post.content }} />
     </div>
   );
