@@ -19,7 +19,7 @@ export async function getStaticPaths() {
   return {
     paths: result.data.posts.nodes.map(({ slug }) => {
       return {
-        params: { slug },
+        params: { slug: decodeURI(slug) },
       };
     }),
     fallback: false,
