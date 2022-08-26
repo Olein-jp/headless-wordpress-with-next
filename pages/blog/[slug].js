@@ -13,7 +13,7 @@ export default function BlogPage({ post }) {
 
 export async function getStaticPaths() {
   const result = await client.query({
-    query: GET_SINGLE_POSTS,
+    query: GET_ALL_POSTS,
   });
 
   return {
@@ -29,14 +29,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const { slug } = params;
   const result = await client.query({
-    query: gql`
-      query GetWordPressPostBySlug($slug: String!) {
-        postBy(slug: $slug) {
-          content
-          title
-        }
-      }
-    `,
+    query: GET_SINGLE_POSTS,
     variables: { slug },
   });
 

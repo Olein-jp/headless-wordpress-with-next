@@ -3,9 +3,9 @@ import { gql } from "@apollo/client";
 import { client } from "../lib/apollo";
 import styles from "../styles/Home.module.css";
 import Link from "next/link";
-import { GET_ALL_POSTS } from "../lib/queries";
+import { GET_ALL_POSTS, GET_HOME_PAGE } from "../lib/queries";
 
-export default function Home({ posts, title, content }) {
+export default function Home({ posts, homePageTitle, homePageContent }) {
   return (
     <div className={styles.container}>
       <Head>
@@ -15,8 +15,11 @@ export default function Home({ posts, title, content }) {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>{title}</h1>
-        <div dangerouslySetInnerHTML={{ __html: content }} />
+        <h1
+          className={styles.title}
+          dangerouslySetInnerHTML={{ __html: homePageTitle }}
+        />
+        <div dangerouslySetInnerHTML={{ __html: homePageContent }} />
 
         <ul>
           {posts.map(({ title, slug, date }) => (
@@ -35,15 +38,19 @@ export default function Home({ posts, title, content }) {
 }
 
 export async function getStaticProps() {
-  const result = await client.query({
+  const homePageContent = await client.query({
+    query: GET_HOME_PAGE,
+  });
+
+  const allPosts = await client.query({
     query: GET_ALL_POSTS,
   });
 
   return {
     props: {
-      posts: result.data.posts.nodes,
-      title: result.data.pageBy.title,
-      content: result.data.pageBy.content,
+      posts: allPosts.data.posts.nodes,
+      homePageTitle: homePageContent.data.pageBy.title,
+      homePageContent: homePageContent.data.pageBy.content,
     },
   };
 }
